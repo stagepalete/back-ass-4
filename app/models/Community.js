@@ -12,7 +12,7 @@ const communitySchema = new mongoose.Schema({
     },
     creator: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'users',
         required: true
     },
     createdAt: {
@@ -21,7 +21,7 @@ const communitySchema = new mongoose.Schema({
     },
     moderators: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' 
+        ref: 'users' 
     }],
     comunityAva : {
         type : String,
@@ -35,14 +35,10 @@ const communitySchema = new mongoose.Schema({
     },
     members: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'users',
     }],
     rules: [{
         type: String
-    }],
-    posts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post'
     }]
 });
 

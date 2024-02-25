@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <%- include('../components/adminheader.ejs');%>
+    
+    <!-- Sidebar -->
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('../components/adminsidebar.ejs');%>
+    
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <h4>Activities</h4>
+                <% history.forEach(obj => {%>
+                    <div class="mt-3 d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column">
+                            <span><%= obj.user.name%> <%= obj.user.lastname %></span>
+                            <span><%= obj.action %> -> <%= obj.target %></span>
+                            <span class="badge bg-dark"><%= obj.createdAt.toLocaleString() %></span>
+                        </div>
+                </div>
+                <hr>
+                <% }); %>
+            </main>
+        </div>
+    </div>
+    
+
+    <%- include('../components/footer.ejs');%>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <%- include('../components/javascripts.ejs');%>
+
+
+
+</body>
+
+</html>

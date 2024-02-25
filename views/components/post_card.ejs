@@ -1,46 +1,76 @@
 <div class="p-3 mb-2 rounded border">
     <div class="fs-5 fw-bold mb-1">
-        <img src="" alt="Profile Picture" class="img-fluid rounded-circle"
+        <img src="<%= post.author.avatar %>" alt="Profile Picture" class="img-fluid rounded-circle"
             style="width: 40px; height: 40px;">
-        <span class="ms-2">JohnDoe</span>
+        <span class="ms-2"><a class="text-dark text-decoration-none" href="/profile/<%= post.author.username%>">
+                <%= post.author.username %>
+                    <% if (post.author.is_admin){%>
+                        <span class="badge bg-dark"><%= __("admin")%></span>
+                    <% } %>
+            </a></span>
     </div>
     <div class="fs-5 mb-2">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut feugiat nisi. Mauris at
-        maximus lorem. Nulla facilisi. Integer ut orci id velit dictum facilisis vel sit amet est.
-        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-        egestas. Ut consequat tortor vitae leo aliquam, nec venenatis magna tempor. Aliquam erat
-        volutpat. Vivamus nec odio eget ante mollis fermentum. Nam pulvinar tortor sit amet tellus
-        fermentum scelerisque.
+        <a href="/posts/<%= post._id %>" class="text-dark text-decoration-none">
+            <%= post.title %>
+        </a>
     </div>
+    <div class="fs-5 mb-2">
+        <%= post.content %>
+    </div>
+    <div class="d-flex flex-row fs-5 mb-2 gap-1">
+        <p class="badge bg-secondary"><a href="/topics/<%= post.topic.name %>" class="text-white text-decoration-none">
+                <%= post.topic.name %>
+            </a></p>
+        <p class="badge bg-secondary"><a href="/communities/<%= post.community.name %>"
+                class="text-white text-decoration-none">
+                <%= post.community.name %>
+            </a></p>
+    </div>
+    <p class="">
+        <%= post.createdAt.toLocaleString() %>
+    </p>
     <div class="fs-5">
         <div class="row">
+            <input type="hidden" data-post-id="<%= post._id %>" class="postidinput" name="">
             <div class="col-4 col-sm-4 col-md-4 align-item-center">
-                <button type="button" class="btn">
-                    <img src="/images/icons/likes.png" class="img-fluid" width="24" alt="">
+                <button type="button" class="btn upvote-btn" data-is-liked="<%= post.isLiked ? '1' : '0' %>"
+                    data-post-id="<%= post._id %>" id="upvote-btn<%= post._id %>">
+                    <img src="<%= post.isLiked? '/images/icons/liked.png' : '/images/icons/likes.png' %>"
+                        class="img-fluid" id="likeImage<%= post._id %>" width="24" alt="">
                 </button>
-                <span class="ms-2">10</span>
+                <span class="ms-2" id="upvoteCounter<%= post._id %>">
+                    <%= post.upvotes.length %>
+                </span>
             </div>
             <div class="col-4 col-sm-4 col-md-4 align-item-center">
-                <button type="button" class="btn">
-                    <img src="/images/icons/dislike.png" class="img-fluid" width="24" alt="">
+                <button type="button" class="btn downvote-btn" data-is-disliked="<%= post.isDisliked ? '1' : '0' %>"
+                    id="downvote-btn<%= post._id %>" data-post-id="<%= post._id %>">
+                    <img src="<%= post.isDisliked ? '/images/icons/disliked.png' : '/images/icons/dislikes.png' %>"
+                        class="img-fluid" id="dislikeImage<%= post._id %>" width="24" alt="">
                 </button>
-                <span class="ms-2">5</span>
+                <span class="ms-2" id="downvoteCounter<%= post._id %>">
+                    <%= post.downvotes.length %>
+                </span>
             </div>
             <div class="col-4 col-sm-4 col-md-4 align-item-center">
                 <button type="button" class="btn">
                     <img src="/images/icons/comments.png" class="img-fluid" width="24" alt="">
                 </button>
-                <span class="ms-2">15</span>
+                <span class="ms-2" id="commentCounter">
+                    <%= post.comments.length%>
+                </span>
             </div>
         </div>
     </div>
     <div class="comments mt-3">
-        <div class="comment">
-            <strong>User1:</strong> This is a comment.
-        </div>
-        <div class="comment">
-            <strong>User2:</strong> Another comment here.
-        </div>
-        <!-- More comments can be added dynamically -->
+        <% let commentCount=0; %>
+            <% post.comments.forEach(comment=> {
+                if (commentCount < 2) { %>
+                    <div class="comment">
+                        <strong><a href="/profile/<%= comment.user.username %>" class="text-dark text-decoration-none">
+                                <%= comment.user.username %>
+                            </a>: <%= comment.comment %></strong>
+                    </div>
+                    <% commentCount++; } }); %>
     </div>
 </div>

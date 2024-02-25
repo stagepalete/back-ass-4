@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <title>Reddit - Community</title>
 </head>
+
 <body>
     <header>
         <%- include ('../components/header.ejs') %>
@@ -17,18 +20,97 @@
         <div class="container-fluid">
             <div class="row">
                 <%- include ('../components/sidebar.ejs') %>
-                <div class="col-md-9 p-3">
-                </div>
+                    <div class="col-md-9 p-3">
+                        <div class="bg-light">
+                            <div class="" style="width: 100%; height: 200px; overflow-y: hidden;">
+                                <img src="<%= community.comunityTopAva %>" style="margin: -200px 0px 0px 0px;" alt="Community top ava" class="img-fluid w-100">
+                            </div>
+                            <div class="d-flex flex-row justify-content-between p-4">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="overflow-hidden">
+                                        <img src="<%= community.comunityAva %>" alt="" class="rounded-circle" width="50">
+                                    </div>
+                                    <div class="fw-bold fs-4">
+                                        <%= community.name %>
+                                        <h6 id="memberCounter"><%= community.members.length %> members</h6>
+                                    </div><br>
+                                </div>
+                                <div class="d-flex flex-row gap-2 align-items-center">
+                                    <button class="btn btn-primary" id="add-post-button" data-bs-toggle="modal" data-bs-target="#addPostModal" <% if (!community.members.includes(user.id)){ %> style="display:none;" <%}%>>Add Post</button>
+                                    <% if (!community.members.includes(user.id)){ %>
+                                    <button class="btn btn-primary" data-community-name="<%= community.name %>" id="join-btn">Join</button>
+                                    <% }%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-between mt-3">
+                            <div class="col-md-9 p-1" id="posts">
+                                <% posts.forEach(post=> { %>
+                                    <%- include('../components/post_card.ejs', {post: post})%>
+                                        <hr>
+                                        <% }); %>
+                            </div>
+                            <div class="bg-light col-md-3 p-1">
+                                <h4><strong>Rules:</strong></h4>
+                                <ul>
+                                    <% community.rules.forEach(rule => { %>
+                                    <li><%= rule %></li>
+                                    <% }); %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
+        <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add post</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form method="POST">
+                    <div class="form-group">
+                        <label for="">Title</label>
+                        <input type="text" class="form-control" placeholder="Enter title" id="post-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Topic</label>
+                        <select name="" id="topic_name" class="form-control" required>
+                            <% topics.forEach(topic => { %>
+                            <option value="<%= topic._id %>"><%= topic.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Content</label>
+                        <input type="text" class="form-control" id="post-content" placeholder="Enter content" required>
+                    </div>
+                    <div id="messages"></div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-community-name="<%= community._id %>" id="post-add-btn">Post</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </main>
 
     <footer>
         <%- include ('../components/footer.ejs') %>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/posts/posts.js"></script>
+    <script type="text/javascript" src="/javascripts/communities/join.js"></script>
+    <script type="text/javascript" src="/javascripts/communities/postPost.js"></script>
     <%- include ('../components/javascripts.ejs') %>
 </body>
+
 </html>

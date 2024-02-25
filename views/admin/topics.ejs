@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <%- include('../components/adminheader.ejs');%>
+
+        <!-- Sidebar -->
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('../components/adminsidebar.ejs');%>
+                    <!-- Main content -->
+                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                        <h4>Topics</h4>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTopic"><%= __("addtopic")%></button>
+                        <ul class="list-group mt-4">
+                            <% topics.forEach(topic=> { %>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <img src="<%= topic.image %>" class="rounded-circle" width="50" alt="">
+                                        <a href="/admin/topic/<%= topic.name %>" class="text-dark">
+                                            <%= topic.name%>
+                                        </a>
+                                    </div>
+                                    <div class="">
+                                        <a href="/topics/<%= topic.name %>" class="btn btn-secondary"><%= __("view")%></a>
+                                        <button class="btn btn-primary edit-topic-btn"
+                                            data-topic-name="<%= topic.name %>"
+                                            data-topic-id="<%= topic._id %>"><%= __("edit")%></button>
+                                        <button class="btn btn-danger delete-topic-btn" data-topic-name="<%= topic.name%>"><%= __("delete")%></button>
+                                    </div>
+                                </li>
+                                <hr>
+                                <%});%>
+                        </ul>
+                    </main>
+                    <div class="modal fade" id="editTopicModal" tabindex="-1" aria-labelledby="editTopicModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editTopicModalLabel"><%= __("edittopic")%></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editTopicForm" method="POST" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="topicName" class="form-label"><%= __("topicname")%></label>
+                                            <input type="text" class="form-control" id="topicName" name="topicName"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="topicAva" class="form-label"><%= __("topicicon")%></label>
+                                            <input type="file" name="topicAva" id="topicAva" class="form-control">
+                                        </div>
+
+                                        <input type="hidden" id="topicId" name="topicId">
+
+                                        <button type="submit" class="btn btn-primary"><%= __("savechanges")%></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="deleteTopicModal" tabindex="-1" aria-labelledby="deleteTopicModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteTopicModalLabel"><%= __("deletetopic")%></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="deleteTopicForm" method="POST">
+                                        <label for="">Are you sure you want to delete topic?<br>It will delete all posts with this topic <span id="deletetopicnamelabel"></span></label>
+                                        <input type="hidden" id="deleteTopicName" name="deleteTopicName" value=""><br>
+                                        <button type="submit" class="btn btn-danger"><%= __("delete")%></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="addTopic" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><%= __("addtopic")%></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form method="post" action="/admin/api/topics/add" enctype="multipart/form-data">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for=""><%= __("topicname")%></label>
+                                            <input type="text" class="form-control" name="name"
+                                                placeholder="Enter new topic" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for=""><%= __("topicicon")%></label>
+                                            <input type="file" class="form-control" name="ava"
+                                                placeholder="Upload topic icon" required>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal"><%= __("close")%></button>
+                                        <button type="submit" class="btn btn-primary"><%= __("addtopic")%></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+
+        <%- include('../components/footer.ejs');%>
+
+            <!-- Bootstrap Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <%- include('../components/javascripts.ejs');%>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('.edit-topic-btn').click(function () {
+                            var topicId = $(this).data('topic-id');
+                            var topicName = $(this).data('topic-name');
+                            $('#editTopicForm').attr('action', `/admin/api/topics/edit/${topicName}`);
+                            $('#topicId').val(topicId);
+                            $('#topicName').val(topicName);
+
+                            $('#editTopicModal').modal('show');
+                        });
+                        $('.delete-topic-btn').click(function () {
+                            const topicName = $(this).data('topic-name');
+                            $('#deleteTopicName').val(topicName);
+                            $('#deleteTopicForm').attr('action', `/admin/api/topics/delete/${topicName}`);
+                            $('#deleteTopicModal').modal('show');
+                        })
+                    });
+                </script>
+
+</body>
+
+</html>

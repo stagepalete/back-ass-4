@@ -11,7 +11,6 @@
     <title>Reddit - Profile</title>
 
     <style>
-
         .comment {
             margin-bottom: 10px;
         }
@@ -34,35 +33,44 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="d-flex flex-row align-items-center gap-5">
-                            <img src="<%= findUser.avatar %>" class="img-fluid rounded" width="50" alt="">
-                            <div class="fs-5 fw-bold"><%= findUser.name %> <%= findUser.lastname %></div>
+                            <img src="<%= findUser.avatar %>" class="img-fluid rounded-circle" width="50" alt="">
+                            <div class="fs-5 fw-bold">
+                                <%= findUser.name %>
+                                    <%= findUser.lastname %>
+                                    <% if (findUser.is_admin){%>
+                                        <span class="badge bg-dark"><%= __("admin")%></span>
+                                    <% } %>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 text-end">
-                        <button class="btn btn-primary">
-                            <div class="d-flex flex-row align-items-center gap-2">
-                                <img src="/images/profile/editprofile.png" class="img-fluid rounded" width="24" alt="">
-                                <strong>Edit profile</strong>
-                            </div>
-                        </button>
+                        <% if(user.username===findUser.username ){%>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfile">
+                                <div class="d-flex flex-row align-items-center gap-2">
+                                    <img src="/images/profile/editprofile.png" class="img-fluid rounded" width="24"
+                                        alt="">
+                                    <strong><%= __("editprofile")%></strong>
+                                </div>
+                            </button>
+                            <%}%>
                     </div>
                 </div>
                 <div class="row justify-content-center align-items-center gap-2 p-2">
                     <div class="col-sm-2 col-md-2 text-center">
                         <img src="/images/profile/timeline.png" class="img-fluid" width="24" alt="">
-                        Posts
+                        <%= __("posts")%>
                     </div>
                     <div class="col-sm-2 col-md-2 text-center">
                         <img src="/images/profile/about.png" class="img-fluid" width="24" alt="">
-                        About
+                        <%= __("about")%>
                     </div>
                     <div class="col-sm-2 col-md-2 text-center">
                         <img src="/images/profile/communities.png" class="img-fluid" width="24" alt="">
-                        Comunities
+                        <%= __("communities")%>
                     </div>
                     <div class="col-sm-2 col-md-2 text-center">
                         <img src="/images/profile/likes.png" class="img-fluid" width="24" alt="">
-                        Likes
+                        <%= __("likes")%>
                     </div>
                 </div>
             </div>
@@ -71,85 +79,90 @@
         <div class="container mt-3">
             <div class="row justify-content-between">
                 <div class="col-md-2 rounded bg-light p-4">
-                    <strong>About</strong>
+                    <strong><%= __("about")%></strong>
                     <p>
-                        <strong>Joined: </strong><br>
-                        <span><%= findUser.createdAt.toLocaleString()  %></span>
+                        <strong><%= __("joined")%>: </strong><br>
+                        <span>
+                            <%= findUser.createdAt.toLocaleString() %>
+                        </span>
                     </p>
                     <p>
-                        <strong>Lives</strong><br>
-                        <span><%= findUser.location.country %></span>
+                        <strong><%= __("lives")%></strong><br>
+                        <span>
+                            <%= findUser.location.country %>, <%= findUser.location.city %>
+                        </span>
                     </p>
                     <p>
-                        <strong>Email</strong><br>
-                        <span><%= findUser.email %></span>
+                        <strong><%= __("email")%></strong><br>
+                        <span>
+                            <%= findUser.email %>
+                        </span>
                     </p>
                     <p>
-                        <strong>Website</strong><br>
-                        <span><%= findUser.username %></span>
+                        <strong><%= __("website")%></strong><br>
+                        <span>
+                            <%= findUser.username %>
+                        </span>
                     </p>
                 </div>
                 <div class="col-md-7 rounded p-4">
-
-                    <div class="p-3 mb-2 rounded border">
-                        <div class="fs-5 fw-bold mb-1">
-                            <img src="<%= findUser.avatar %>" alt="Profile Picture" class="img-fluid rounded-circle"
-                                style="width: 40px; height: 40px;">
-                            <span class="ms-2">JohnDoe</span>
-                        </div>
-                        <div class="fs-5 mb-2">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut feugiat nisi. Mauris at
-                            maximus lorem. Nulla facilisi. Integer ut orci id velit dictum facilisis vel sit amet est.
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-                            egestas. Ut consequat tortor vitae leo aliquam, nec venenatis magna tempor. Aliquam erat
-                            volutpat. Vivamus nec odio eget ante mollis fermentum. Nam pulvinar tortor sit amet tellus
-                            fermentum scelerisque.
-                        </div>
-                        <div class="fs-5">
-                            <div class="row">
-                                <div class="col-4 col-sm-4 col-md-4 align-item-center">
-                                    <button type="button" class="btn">
-                                        <img src="/images/icons/likes.png" class="img-fluid" width="24" alt="">
-                                    </button>
-                                    <span class="ms-2">10</span>
-                                </div>
-                                <div class="col-4 col-sm-4 col-md-4 align-item-center">
-                                    <button type="button" class="btn">
-                                        <img src="/images/icons/dislike.png" class="img-fluid" width="24" alt="">
-                                    </button>
-                                    <span class="ms-2">5</span>
-                                </div>
-                                <div class="col-4 col-sm-4 col-md-4 align-item-center">
-                                    <button type="button" class="btn">
-                                        <img src="/images/icons/comments.png" class="img-fluid" width="24" alt="">
-                                    </button>
-                                    <span class="ms-2">15</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comments mt-3">
-                            <div class="comment">
-                                <strong>User1:</strong> This is a comment.
-                            </div>
-                            <div class="comment">
-                                <strong>User2:</strong> Another comment here.
-                            </div>
-                            <!-- More comments can be added dynamically -->
-                        </div>
-                    </div>
+                    <% posts.forEach(post=> { %>
+                        <%- include ('../components/post_card.ejs', {post : post}); %>
+                        <hr>
+                    <%});%>
                 </div>
                 <div class="col-md-2 rounded bg-light p-4">
-                    <strong>Recently joined</strong>
-                    <p>Comunity 1</p>
-                    <p>Comunity 2</p>
-                    <p>Comunity 2</p>
-                    <p>Comunity 2</p>
-                    <p>Comunity 2</p>
-                    <p>Comunity 2</p>
+                    <strong><%= __("recentlyjoined")%></strong>
+                    <% communities.forEach(community=> {%>
+                        <p><a href="/communities/<%= community.name %>" class="text-dark">
+                                <%= community.name %>
+                            </a></p>
+                        <% }); %>
                 </div>
             </div>
         </div>
-
+        <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><%= __("editprofile")%></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="/api/auth/edit-profile" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="">Name</label>
+                                <input type="text" id="name-field" name="name" class="form-control" value="<%= user.name %>"
+                                    placeholder="Enter new name">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Lastname</label>
+                                <input type="text" id="lastname-field" name="lastname" class="form-control" value="<%= user.lastname %>"
+                                    placeholder="Enter new lastname">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Avarar</label>
+                                <input type="file" id="avatar-field" name="avatar" class="form-control" placeholder="Enter new name">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Country</label>
+                                <input type="text" id="country-field" name="country" class="form-control" value="<%= user.country ? user.country : '' %>
+                                " placeholder="Enter new Country">
+                            </div>
+                            <div class="form-group">
+                                <label for="">City</label>
+                                <input type="text" id="city-field" name="city" class="form-control"
+                                    value="<%= user.city ? user.city : '' %>" placeholder="Enter new city">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -161,6 +174,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="/javascripts/profile/profile.js"></script>
+    <script type="text/javascript" src="/javascripts/posts/posts.js"></script>
     <%- include ('../components/javascripts.ejs') %>
 </body>
 

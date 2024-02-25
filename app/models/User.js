@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        required: true,
+        required: false,
         unique: false,
         default: '/images/profile/def.png'
     },
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    location: [{
+    location: {
         country: {
             type: String,
             required: false,
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
             required: false,
             default: 'None'
         }
-    }],
+    },
     password: {
         type: String,
         required: true

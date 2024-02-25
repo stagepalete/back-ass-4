@@ -11,34 +11,44 @@ const postSchema = new mongoose.Schema({
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', 
+        ref: 'users',
         required: true
     },
     createdAt: {
         type: Date,
         default: Date.now
     },
-    topic : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Topic',
-        required : true
+    topic: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'topic',
+        required: true,
     },
     community: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Community', 
+        ref: 'community',
         required: true
     },
     comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment' 
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users',
+        },
+        comment : {
+            type : String,
+            required : true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
     }],
     upvotes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' 
+        ref: 'users',
     }],
     downvotes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'users',
     }]
 });
 

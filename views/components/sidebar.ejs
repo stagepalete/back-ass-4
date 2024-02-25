@@ -2,35 +2,46 @@
     <div class="position-sticky">
         <ul class="nav flex-column">
             <div class="">
+                <h5>Coming holdays</h5>
+                <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
+                <p id="holidays" class="text-dark"></p>
+                </li>
+            </div>
+            <hr>
+            <% if(user.is_admin) {%>
+            <div class="">
+                <h5><%= __("admin")%></h5>
+                <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
+                    <img src="/images/icons/home.png" alt="" class="img-fluid" width="24">
+                    <a class="nav-link active text-dark" aria-current="page" href="/admin"><%= __("adminpanel")%></a>
+                </li>
+            </div>
+            <hr>
+            <% } %>
+            <div class="">
                 <h5>Main</h5>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
                     <img src="/images/icons/home.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link active text-dark" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active text-dark" aria-current="page" href="/"><%= __("home")%></a>
                 </li>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
                     <img src="/images/icons/popular.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark" href="/popular">Popular</a>
+                    <a class="nav-link text-dark" href="/popular"><%= __("popular")%> Reddit</a>
                 </li>
             </div>
             <hr>
             <div class="">
-                <h5>Topics</h5>
+                <h5><%= __("topics")%></h5>
+                <% topics.forEach(topic => {%>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
-                    <img src="/images/icons/home.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark" href="/popular">Game</a>
+                    <img src="<%= topic.image %>" alt="" class="img-fluid" width="24">
+                    <a class="nav-link text-dark" href="/topics/<%= topic.name %>"><%= topic.name %></a>
                 </li>
-                <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
-                    <img src="/images/icons/home.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark" href="/popular">History</a>
-                </li>
-                <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
-                    <img src="/images/icons/home.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark" href="/popular">Politics</a>
-                </li>
+                <% }); %>
             </div>
             <hr>
             <div class="">
-                <h5>Resources</h5>
+                <h5><%= __("resources")%></h5>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
                     <img src="/images/profile/about.png" alt="" class="img-fluid" width="24">
                     <a class="nav-link text-dark" href="/about">About</a>
@@ -38,30 +49,30 @@
             </div>
             <hr>
             <div class="">
-                <h5>Communities</h5>
+                <h5><%= __("communities")%></h5>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
                     <img src="/images/icons/top.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark text-start" href="/communities">Top communities</a>
+                    <a class="nav-link text-dark text-start" href="/communities"><%= __("topcommunities")%></a>
                 </li>
             </div>
             <hr>
             <div class="">
-                <h5>Settings</h5>
+                <h5><%= __("settings")%></h5>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
                     <img src="/images/icons/settings.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark" href="/settings">Settings</a>
+                    <a class="nav-link text-dark" href="/settings"><%= __("settings")%></a>
                 </li>
             </div>
             <hr>
             <div class="">
-                <h5>Language</h5>
+                <h5><%= __("language")%></h5>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
                     <img src="/images/icons/lang.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark" href="#">En</a>
+                    <a class="nav-link text-dark" href="/lang/en"><%= __("en")%></a>
                 </li>
                 <li class="nav-item d-flex flex-row align-items-center btn border-0 btn-outline-light px-2 py-0">
                     <img src="/images/icons/lang.png" alt="" class="img-fluid" width="24">
-                    <a class="nav-link text-dark" href="#">Ru</a>
+                    <a class="nav-link text-dark" href="/lang/ru"><%= __("ru")%></a>
                 </li>
             </div>
         </ul>

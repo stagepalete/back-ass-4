@@ -1,7 +1,7 @@
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="/">Reddit</a>
+        <a class="navbar-brand" href="/"><%= __("reddit")%></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,16 +9,16 @@
         <div class="collapse navbar-collapse align-items-center" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/"><%= __("home")%></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/weather">Weather</a>
+                    <a class="nav-link" href="/weather"><%= __("weather")%></a>
                 </li>
             </ul>
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 w-100">
                 <form class="container-fluid w-100 d-flex">
-                    <input class="form-control me-2" type="search" id="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit" id="search-btn">Search</button>
+                    <input class="form-control me-2" type="search" id="search" placeholder="<%= __("search")%>" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" id="search-btn"><%= __("search")%></button>
                 </form>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -29,14 +29,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <button id="logout-btn" class="btn btn-danger">Logout</button>
+                        <button id="logout-btn" class="btn btn-danger"><%= __("logout")%></button>
                     </li>
                 <% }else{ %>
                     <li class="nav-item">
-                        <a href="/login" class="nav-link active">Login</a>
+                        <a href="/login" class="nav-link active"><%= __("login")%></a>
                     </li>
                     <li class="nav-item">
-                        <a href="/signup" class="nav-link">Sign up</a>
+                        <a href="/signup" class="nav-link"><%= __("signup")%></a>
                     </li>
                 <% } %>
             </ul>

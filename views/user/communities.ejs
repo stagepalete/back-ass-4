@@ -6,7 +6,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
-    <title>Reddit - Communities</title>
+    <title><%= __("reddit")%> - <%= __("communities")%></title>
 </head>
 <body>
     <header>
@@ -18,6 +18,56 @@
             <div class="row">
                 <%- include ('../components/sidebar.ejs') %>
                 <div class="col-md-9 p-3">
+                    <div class="d-flex flex-row gap-4">
+                        <h1><%= __("communities")%></h1>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCommunity"><%= __("create") %> <%= __("community")%></button>
+                    </div>
+
+                    <div class="row gap-2 mt-5">
+                        <% communities.forEach(community => {%>
+                        <div class="col-md-3 bg-light py-2">
+                            <div class="d-flex flex-row align-items-center justify-content-evenly">
+                                <img src="<%= community.comunityAva %>" alt="" width="36" class="img-fluid rounded">
+                                <div class="">
+                                    <h6><a href="/communities/<%= community.name %>" class="text-dark"><%= community.name %></a></h6>
+                                    <span><%= community.description %></span>
+                                    <p><%= community.members.length %> <%= __("members")%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="createCommunity" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><%= __("createcommunity")%></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="/api/communities/add" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for=""><%= __("name")%></label>
+                                <input type="text" id="" name="name" class="form-control" placeholder="<%= __("name")%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><%= __("description")%></label>
+                                <input type="text" id="" name="description" class="form-control" placeholder="<%= __("description")%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><%= __("communityava")%></label>
+                                <input type="file" id="" name="ava" class="form-control" placeholder="<%= __("communityava")%>" required>
+                            </div>
+                        </div>
+                        <div id="messages" type="alert alert-danger"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= __("close")%></button>
+                            <button type="submit" class="btn btn-primary"><%= __("create")%></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
